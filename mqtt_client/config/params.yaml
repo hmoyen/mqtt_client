@@ -3,14 +3,37 @@ broker:
   port: 1883
 bridge:
   ros2mqtt:
-    - ros_topic: /ping/ros
-      mqtt_topic: pingpong/ros
-    - ros_topic: /ping/primitive
-      mqtt_topic: pingpong/primitive
+    - ros_topic: /broker/collision
+      mqtt_topic: /drone_collision
+      primitive: true
+    - ros_topic: /movement/right
+      mqtt_topic: /move/right
+      primitive: true
+    - ros_topic: /movement/right
+      mqtt_topic: /move/right
+      primitive: true
+    - ros_topic: /movement/left
+      mqtt_topic: /move/left
+      primitive: true
+    - ros_topic: /movement/forward
+      mqtt_topic: /move/forward
+      primitive: true
+    - ros_topic: /movement/backward
+      mqtt_topic: /move/backward
       primitive: true
   mqtt2ros:
-    - mqtt_topic: pingpong/ros
-      ros_topic: /pong/ros
-    - mqtt_topic: pingpong/primitive
-      ros_topic: /pong/primitive
+    - mqtt_topic: /broker/world
+      ros_topic: /ros/world
+      primitive: true
+    - mqtt_topic: /broker/end
+      ros_topic: /ros/end
+      primitive: true
+    - mqtt_topic: /broker/init
+      ros_topic: /ros/init
+      primitive: true
+    - mqtt_topic: /broker/set_vel_x
+      ros_topic: /ros/set_vel_x
+      primitive: true
+    - mqtt_topic: /broker/set_vel_y
+      ros_topic: /ros/set_vel_y
       primitive: true
