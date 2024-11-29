@@ -6,6 +6,7 @@ set(ROS_VERSION $ENV{ROS_VERSION})
 
 ## Compile as C++17
 add_compile_options(-std=c++17)
+link_libraries("$<$<AND:$<CXX_COMPILER_ID:GNU>,$<VERSION_LESS:$<CXX_COMPILER_VERSION>,9.0>>:-lstdc++fs>")
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -92,7 +93,6 @@ elseif(${ROS_VERSION} EQUAL 1)
     mqtt_client_interfaces
     nodelet
     roscpp
-    rosfmt ## For fmt::format.
     std_msgs
     topic_tools
   )
@@ -100,6 +100,9 @@ elseif(${ROS_VERSION} EQUAL 1)
   ## System dependencies are found with CMake's conventions
   find_package(PahoMqttCpp REQUIRED)
   set(PahoMqttCpp_LIBRARIES PahoMqttCpp::paho-mqttpp3)
+
+  find_package(fmt REQUIRED)
+  set(fmt_LIBRARIES fmt::fmt)
 
 
   ## Uncomment this if the package has a setup.py. This macro ensures
@@ -194,7 +197,9 @@ elseif(${ROS_VERSION} EQUAL 1)
       roscpp
       std_msgs
       topic_tools
-    DEPENDS PahoMqttCpp
+    DEPENDS
+      fmt
+      PahoMqttCpp
   )
 
   ###########
@@ -236,6 +241,7 @@ elseif(${ROS_VERSION} EQUAL 1)
   ## Specify libraries to link a library or executable target against
   target_link_libraries(${PROJECT_NAME}
     ${catkin_LIBRARIES}
+    ${fmt_LIBRARIES}
     ${PahoMqttCpp_LIBRARIES}
   )
 
