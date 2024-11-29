@@ -1,0 +1,20 @@
+/**/*:
+  ros__parameters:
+    broker:
+      host: localhost       # Update if your broker is on a different machine
+      port: 1883            # The MQTT broker's port
+    bridge:
+      mqtt2ros:
+        mqtt_topics:
+          - rotations         # MQTT topic from your ESP
+          - sonar1            # MQTT topic for left sonar (90 degrees)
+          - sonar2            # MQTT topic for right sonar (-90 degrees)
+        rotations:
+          ros_topic: /rotations   # Corresponding ROS 2 topic name for rotations
+          primitive: true         # Indicates a simple type, like a string
+        sonar1:
+          ros_topic: /sonar1      # ROS 2 topic for sonar 1 (left sonar)
+          primitive: true         # Assuming a simple numeric type for the distance (in cm)
+        sonar2:
+          ros_topic: /sonar2      # ROS 2 topic for sonar 2 (right sonar)
+          primitive: true         # Assuming a simple numeric type for the distance (in cm)
